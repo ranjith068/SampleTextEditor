@@ -9,6 +9,7 @@ public class PreviewActivity extends AppCompatActivity {
 
     private TextView mPreview;
     String previewText = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,9 +18,9 @@ public class PreviewActivity extends AppCompatActivity {
         mPreview = (TextView) findViewById(R.id.preview);
 
         Intent intent = getIntent();
-        if(intent.hasExtra("preview_text")){
+        if (intent.hasExtra("preview_text")) {
             Bundle bd = getIntent().getExtras();
-            if(!bd.getString("preview_text").equals(null)){
+            if (!bd.getString("preview_text").equals(null)) {
                 previewText = bd.getString("preview_text");
             }
         }

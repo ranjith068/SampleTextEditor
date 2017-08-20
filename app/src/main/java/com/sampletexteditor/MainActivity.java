@@ -29,11 +29,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.richeditor.RichEditor;
 
-public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.SavedTexts{
+public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.SavedTexts {
 
     private RichEditor mEditor;
     private TextView wordCount;
-
     private String previewText;
 
     TextEditorDB database;
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
     boolean isBold = false;
     boolean isItalic = false;
     boolean isUnderline = false;
-
     boolean isBlockQuotes = false;
 
     @BindView(R.id.action_bold)
@@ -83,24 +81,24 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
         mEditor.focusEditor();
 
 
-        if(database.getTextsCount()>0){
+        if (database.getTextsCount() > 0) {
             new GetDatabaseTexts(getApplicationContext(), savedTexts).execute();
         }
 
 
         mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
-            @Override public void onTextChange(String text) {
-                previewText  = text;
+            @Override
+            public void onTextChange(String text) {
+                previewText = text;
 //                Toast.makeText(MainActivity.this, "word count : "+wordCount(text), Toast.LENGTH_SHORT).show();
-                wordCount.setText("Word Count = "+wordCount(text));
+                wordCount.setText("Word Count = " + wordCount(text));
             }
         });
 
 
-
     }
 
-    public int wordCount(String str){
+    public int wordCount(String str) {
 
         String words = str.trim();
         if (words.isEmpty())
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
 
         String example = "";
         for (int i = 0; i < savedTexts.size(); i++) {
-            example = example+savedTexts.get(i);
+            example = example + savedTexts.get(i);
         }
 
         mEditor.setHtml(example);
@@ -128,13 +126,13 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
     public void actionPreviewBtn(View view) {
 
         String previewTextWithBody;
-        if(previewText.contains("<body>")){
-             previewTextWithBody = previewText;
-        }else{
-             previewTextWithBody = "<body>"+previewText+"</body>";
+        if (previewText.contains("<body>")) {
+            previewTextWithBody = previewText;
+        } else {
+            previewTextWithBody = "<body>" + previewText + "</body>";
         }
 
-        startActivity(new Intent(MainActivity.this,PreviewActivity.class).putExtra("preview_text",previewTextWithBody));
+        startActivity(new Intent(MainActivity.this, PreviewActivity.class).putExtra("preview_text", previewTextWithBody));
 
 
     }
@@ -142,31 +140,30 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
     @OnClick(R.id.save)
     public void actionSave(View view) {
 
-        if(database.getTextsCount()>0){
+        if (database.getTextsCount() > 0) {
             database.deleteAll();
         }
 
-        String previewTextWithBody = "<body>"+previewText+"</body>";
+        String previewTextWithBody = "<body>" + previewText + "</body>";
 
         database.addTexts(new TextEditorModel(previewTextWithBody));
 
-        Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
 
     }
-
 
 
     @OnClick(R.id.action_bold)
     public void actionBold(View view) {
 
-        if(isBold){
+        if (isBold) {
             Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.bold).mutate();
             mDrawable.setColorFilter(new
                     PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN));
             boldButton.setImageDrawable(mDrawable);
             isBold = false;
 
-        }else{
+        } else {
 
             Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.bold).mutate();
             mDrawable.setColorFilter(new
@@ -184,13 +181,13 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
 
         mEditor.setItalic();
 
-        if(isItalic){
+        if (isItalic) {
 
             Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.italic).mutate();
             mDrawable.setColorFilter(new
                     PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN));
             italicButton.setImageDrawable(mDrawable);
-        }else{
+        } else {
             Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.italic).mutate();
             mDrawable.setColorFilter(new
                     PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN));
@@ -204,13 +201,13 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
     public void actionUnderline(View view) {
 
         mEditor.setUnderline();
-        if(isUnderline){
+        if (isUnderline) {
 
             Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.underline).mutate();
             mDrawable.setColorFilter(new
                     PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN));
             underlineButton.setImageDrawable(mDrawable);
-        }else{
+        } else {
             Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.underline).mutate();
             mDrawable.setColorFilter(new
                     PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN));
@@ -221,11 +218,11 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
     }
 
     @OnClick(R.id.action_align_left)
-    public void actionAlignLeft(View view){
-        if(mEditor.getHtml().contains("<ul><li>")|| mEditor.getHtml().contains("blockquote")){
+    public void actionAlignLeft(View view) {
+        if (mEditor.getHtml().contains("<ul><li>") || mEditor.getHtml().contains("blockquote")) {
             Toast.makeText(MainActivity.this, "Blockquotes and bullet points are not allowed to be aligned", Toast.LENGTH_SHORT).show();
 
-        }else {
+        } else {
             mEditor.setAlignLeft();
 
             Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.justify_left).mutate();
@@ -248,10 +245,10 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
 
     @OnClick(R.id.action_align_center)
     public void actionAlignCenter(View view) {
-        if(mEditor.getHtml().contains("<ul><li>")|| mEditor.getHtml().contains("blockquote")){
+        if (mEditor.getHtml().contains("<ul><li>") || mEditor.getHtml().contains("blockquote")) {
             Toast.makeText(MainActivity.this, "Blockquotes and bullet points are not allowed to be aligned", Toast.LENGTH_SHORT).show();
 
-        }else {
+        } else {
             mEditor.setAlignCenter();
 
             Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.justify_left).mutate();
@@ -273,10 +270,10 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
 
     @OnClick(R.id.action_align_right)
     public void actionAlignRight(View view) {
-        if(mEditor.getHtml().contains("<ul><li>")|| mEditor.getHtml().contains("blockquote")){
+        if (mEditor.getHtml().contains("<ul><li>") || mEditor.getHtml().contains("blockquote")) {
             Toast.makeText(MainActivity.this, "Blockquotes and bullet points are not allowed to be aligned", Toast.LENGTH_SHORT).show();
 
-        }else {
+        } else {
             mEditor.setAlignRight();
 
             Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.justify_left).mutate();
@@ -298,20 +295,20 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
 
     @OnClick(R.id.action_blockquote)
     public void actionBlockQuote(View view) {
-        Log.d("Sample","tag : "+mEditor.getHtml());
+        Log.d("Sample", "tag : " + mEditor.getHtml());
 
-        if(isBlockQuotes){
+        if (isBlockQuotes) {
             mEditor.undo();
             Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.blockquote).mutate();
             mDrawable.setColorFilter(new
                     PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN));
             blockquotes.setImageDrawable(mDrawable);
 
-        }else{
-            if(mEditor.getHtml().contains("<ul><li>")){
+        } else {
+            if (mEditor.getHtml().contains("<ul><li>")) {
                 Toast.makeText(MainActivity.this, "Blockquotes and bullet points are not allowed together", Toast.LENGTH_SHORT).show();
 
-            }else {
+            } else {
                 mEditor.setBlockquote();
                 Drawable mDrawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.blockquote).mutate();
                 mDrawable.setColorFilter(new
@@ -325,21 +322,21 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
 
     @OnClick(R.id.action_insert_bullets)
     public void actionInsertBullets(View view) {
-        Log.d("Sample","tag : "+mEditor.getHtml());
-        if(mEditor.getHtml().contains("blockquote")){
+        Log.d("Sample", "tag : " + mEditor.getHtml());
+        if (mEditor.getHtml().contains("blockquote")) {
 
             Toast.makeText(MainActivity.this, "Blockquotes and bullet points are not allowed together", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             mEditor.setBullets();
         }
     }
 
     @OnClick(R.id.action_insert_numbers)
     public void actionInsertNumbers(View view) {
-        if(mEditor.getHtml().contains("blockquote")){
+        if (mEditor.getHtml().contains("blockquote")) {
             Toast.makeText(MainActivity.this, "Blockquotes and bullet points are not allowed together", Toast.LENGTH_SHORT).show();
 
-        }else {
+        } else {
             mEditor.setNumbers();
         }
     }
