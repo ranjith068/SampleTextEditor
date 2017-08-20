@@ -1,4 +1,4 @@
-package com.sampletexteditor.Model;
+package com.sampletexteditor.model;
 
 /**
  * Created by rajesh on 19/8/17.

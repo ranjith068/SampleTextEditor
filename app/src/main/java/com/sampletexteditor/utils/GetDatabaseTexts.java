@@ -36,6 +36,8 @@ public class GetDatabaseTexts extends AsyncTask<String,String,String> {
 
         }
 
+//        database.deleteAll();
+
         return null;
     }
 

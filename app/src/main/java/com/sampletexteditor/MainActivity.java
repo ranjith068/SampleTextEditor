@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sampletexteditor.Model.TextEditorModel;
+import com.sampletexteditor.model.TextEditorModel;
 import com.sampletexteditor.utils.GetDatabaseTexts;
 import com.sampletexteditor.utils.TextEditorDB;
 
@@ -86,42 +86,6 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
         findViewById(R.id.action_underline).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 mEditor.setUnderline();
-            }
-        });
-
-        findViewById(R.id.action_heading1).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setHeading(1);
-            }
-        });
-
-        findViewById(R.id.action_heading2).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setHeading(2);
-            }
-        });
-
-        findViewById(R.id.action_heading3).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setHeading(3);
-            }
-        });
-
-        findViewById(R.id.action_heading4).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setHeading(4);
-            }
-        });
-
-        findViewById(R.id.action_heading5).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setHeading(5);
-            }
-        });
-
-        findViewById(R.id.action_heading6).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setHeading(6);
             }
         });
 
@@ -233,17 +197,22 @@ public class MainActivity extends AppCompatActivity implements GetDatabaseTexts.
         for (int i = 0; i < savedTexts.size(); i++) {
             example = example+savedTexts.get(i);
         }
-//        if (Build.VERSION.SDK_INT >= 24) {
-//            Spanned s = Html.fromHtml(example, 0);
-//            wordCount(s.toString());// for 24 api and more
-//        } else {
-//            Spanned s = Html.fromHtml(example);
-//            wordCount(s.toString()) ;// or for older api
-//        }
 
         mEditor.setHtml(example);
-        wordCount(mEditor.getHtml());
-        mEditor.setHtml(example);
-        mEditor.setFocusable(true);
+        mEditor.focusEditor();
+
+        previewText = mEditor.getHtml();
+
+
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//           Spanned spanned_text = Html.fromHtml(previewText,Html.FROM_HTML_MODE_LEGACY);
+//            wordCount(previewText);
+//        }else {
+//            Spanned spanned_text = Html.fromHtml(previewText);
+//            wordCount(previewText);
+//        }
+
+
     }
 }

@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.util.Log;
 
-import com.sampletexteditor.Model.TextEditorModel;
+import com.sampletexteditor.model.TextEditorModel;
 
 import java.util.ArrayList;
 import java.util.List;
